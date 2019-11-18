@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>02 Basics | JavaScript Fundamentals</title>
+
+    <link rel="icon" href="../img/zuehlke_logo.jpg">
+    <link rel="stylesheet" href="../css/reveal.css">
+    <link rel="stylesheet" href="../css/theme/zuehlke.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="../lib/css/atom-one-dark.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../css/print/pdf.css' : '../css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section class="deck-slide">
+            <h1>Nullability<br>Basics and handling</h1>
+        </section>
+        </section>
+        <section>
+            <!-- Nullability Basics-->
+            <section>
+                <h2>Nullability</h2>
+                <p>In Kotlin we differentiate between references that can be null and those who can not
+                </p>
+                <span class="warn">Compile time error:</span>
+                <pre><code class="hljs" data-trim>
+                    var a : Int = 1
+                    a = null
+						</code></pre>
+                    <span class="warn">No compilation error:</span>
+                <pre><code class="hljs" data-trim>
+                    var a : Int?  = 1
+                    a = null
+						</code></pre>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Nullability Handling</h2>
+            </section>
+            <!-- Truthy & Falsy -->
+            <section>
+                <h2>Dealing with null</h2>
+                <p>Variant 1: check for null</p>
+                <pre><code class="hljs" data-trim>
+                    val a : Int? = 2       
+                    val c = if(a!= null) a else -1
+                </code></pre>
+                <pre><code class="hljs" data-trim>
+                    val d = a ?: -1
+                </code></pre>
+
+                <p>Variant 2: Call safe operator</p>
+                <pre><code class="hljs" data-trim>
+                    val a : String? = "Hello"
+                    val b = a.length
+                </code></pre>
+                <pre><code data-trim>
+                    val a : String? = "Hello"
+                    val b = a?.length
+                </code></pre>
+            </section>
+            <section>
+                <p>Variant 3: Safe-call operator in combination with let</p>
+                <pre><code class="hljs" data-trim>
+                    val list = listOf("I", "like", "kotlin", null )
+                    for(word in list){
+                        word?.let { 
+                            print(word.length)//smart-cast
+                    }}
+                </code></pre>
+                <p>
+                    It will print: <span class="code">146</span>
+                </p>
+                <aside class="notes">
+                    <p>
+                        Safe call operator is also chainable. Show in console.
+                        inside the let block, the compiler ‘smart-casts’ word to a non-nullable, so ’.length’ can be called
+                    </p>
+                </aside>
+            </section>
+            <section>
+                <p>Variant 4: For all NPE-Lovers, the !! operator</p>
+                <pre><code class="hljs" data-trim>
+                    var b : String? = null
+                    println("${b!!.length}")
+                    // it will throw a NullPointerException
+                </code></pre>
+                <div class="fragment tip">When can you use "!!" ?
+                </div>
+                <aside class="notes">
+                    <p>
+                        When can !! be used
+                        In some cases smart-cast is not working
+                        Java interoperation: You are using a Java library and it is documented that this will never return null.
+                    </p>
+                </aside>
+            </section>
+            <section>
+                <p>Variant 5: Do it yourself</p>
+                <pre><code class="hljs" data-trim>
+                    fun &ltT&gt T?.or(default: T): T = if (this == null) default else this
+                </code></pre>
+                <pre><code class="hljs" data-trim>
+                    var variable: String? = "Hello"
+                    println(variable?.length.or(-1))
+                </code></pre>
+            </section>
+        </section>
+        <section class="deck-slide">
+            <h1>Questions?</h1>
+        </section>
+    </div>
+</div>
+<script src="../lib/js/head.min.js"></script>
+<script src="../js/reveal.js"></script>
+
+<script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        history: true,
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+            { src: '../plugin/markdown/marked.js' },
+            { src: '../plugin/markdown/markdown.js' },
+            { src: '../plugin/notes/notes.js', async: true },
+            {
+                src: '../plugin/highlight/highlight.js', async: true, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
+        ]
+    });
+</script>
+</body>
+</html>

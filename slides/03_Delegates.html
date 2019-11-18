@@ -29,6 +29,89 @@
             <h1>Delegates<br />
             Class and Property</h1>
         </section>
+        <section>
+            <section>
+                <h1>Class Delegation</h1>
+                <p>«The interaction of inherited classes with their parents can be surprising and unpredicatable if the ancestor wasn't designed to be inherited from»
+                    </p>
+
+            </section>
+            <section>
+                <h2>Class Delegation</h2>
+                <ul>
+                    <li>The Delegation pattern has proven to be a good alternative to inheritance
+                    </li>
+                    <li>
+                        Interaction with inherited classes can be unpredictable if the ancestor was not designed to be inherited from
+                    </li>
+                    <li>
+                        Kotlin supports it natively – no need to write the delegation explicitly
+                    </li>
+                    <li>
+                        You can delegate multiple classes
+                    </li>
+                    <li>
+                        Only share interface methods (not other methods and variables)
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h2>Delegation design pattern</h2>
+                <img src="/img/delegation-pattern.png"  height="300">
+            </section>
+            <section>
+                <h2>Implement class delegation</h2>
+                <pre><code class="kotlin" data-trim >interface Base {
+    fun print()
+}
+                </code></pre>
+                <pre><code class="kotlin" data-trim >class BaseImpl1(val x: Int) : Base {
+    override fun print() { print(x) }
+}
+                </code></pre>
+                <pre><code class="kotlin" data-trim >
+                    class Derived(b: Base) : Base by b
+                </code></pre>
+            </section>
+            <section>
+                <h2>Usage of class delegation</h2>
+                <pre><code class="kotlin" data-trim >fun main() {
+    val b = BaseImpl1(10)
+    Derived(b).print()
+}
+                     </code></pre>
+                <aside class="notes">
+                    <p>
+                The kotlin compiler will generate all overriding methods from both interfaces for us.
+                    </p>
+                </aside>
+
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>Property Delegation</h1>
+
+            </section>
+            <section>
+                <h2>Property Delegation</h2>
+                <pre><code class="kotlin" data-trim >
+                class Delegate {
+                    operator fun getValue(
+                        thisRef: Any?,
+                        property: KProperty<*>
+                    ): String { return "$thisRef, delegating '${property.name}' to me!"}
+                    
+                    operator fun setValue(
+                        thisRef: Any?,
+                        property: KProperty<*>,
+                        value: String
+                    ) { println("$value is assigned to '${property.name}' in $thisRef.") }
+                }
+                </code></pre>
+
+            </section>
+        </section>
 
 
     </div>
