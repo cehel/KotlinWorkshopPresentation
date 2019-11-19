@@ -282,6 +282,65 @@ class Person {
         </section>
 
 
+        <!--Extension Functions-->
+        <section>
+            <section>
+                <h3>Extension function</h3>
+                <p>Extend a Type with a function it does not yet have (Decorator pattern)</p>
+                <pre><code class="kotlin" data-trim>fun &ltT&gt MutableList&ltT&gt.swap(index1: Int, index2: Int) {
+    val tmp = this[index1] // 'this' corresponds to the list
+    this[index1] = this[index2]
+    this[index2] = tmp
+                </code></pre>
+                <pre><code class="kotlin" data-trim>val list = mutableListOf(1, 2, 3)
+list.swap(0, 2)
+                </code></pre>
+            </section>
+            <section>
+                <h3>What is possible?</h3>
+                <lu>
+                    <li>Create an extension function on Any? type</li>
+                    <li>Extension function on property</li>
+                    <li>Companion objects extensions</li>
+                    <li>...</li>
+                </lu>
+            </section>
+            <section>
+                <h3>Dangers</h3>
+                <p>Extension functions are resolved statically</p>
+                <pre><code class="kotlin" data-trim>open class Shape
+
+class Rectangle: Shape()
+
+fun Shape.getName() = "Shape"
+
+fun Rectangle.getName() = "Rectangle"
+
+fun printClassName(s: Shape) {
+    println(s.getName())
+}
+//prints "Shape"
+printClassName(Rectangle())
+                </code></pre>
+            </section>
+
+            <section>
+            <h3>Dangers</h3>
+            <p>Member functions always wins</p>
+            <pre><code class="kotlin" data-trim>class Example {
+    fun printFunctionType() { println("Class method") }
+}
+
+fun Example.printFunctionType() {
+    println("Extension function")
+}
+
+Example().printFunctionType()
+                </code></pre>
+        </section>
+        </section>
+
+
 
         <section>
             <section>
