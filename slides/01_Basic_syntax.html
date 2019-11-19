@@ -44,7 +44,7 @@
             </aside>
         </section>
         <section>
-            <section><h3>Functions</h3></section>
+            <section><h2>Functions</h2></section>
 
             <section>
                 <h3>Functions</h3>
@@ -129,7 +129,7 @@ val divideByHalf = fun(x: Int) = x/2 //anonymous function
 
 
         <section>
-            <section><h3>Properties and Fields</h3></section>
+            <section><h2>Properties and Fields</h2></section>
             <section>
                 <pre><code class="kotlin" data-trim>
 class Person {
@@ -175,7 +175,7 @@ class Person {
 
         <section>
             <section>
-                <h3>Classes</h3>
+                <h2>Classes</h2>
                 <div>Normal class</div>
                 <div>Data class</div>
                 <div>Sealed class</div>
@@ -279,6 +279,61 @@ class Person {
                     <p>Is usually useful in combination with "when"</p>
                 </aside>
             </section>
+            <section class="deck-slide">
+                <h3>Exercise 1</h3>
+                <p>Check out the branch kotlinworkshop/exercise1</p>
+                <p>Find all the "TODO" (ctrl-shift-F) and follow the instructions</p>
+            </section>
+        </section>
+
+
+        <!--Collections-->
+        <section>
+            <section>
+                <h3>Collections</h3>
+                List
+                <pre><code class="kotlin" data-trim>
+                    listOf(2,3)
+                    mutableListOf&ltInt&gt()
+                </code></pre>
+                Set
+                <pre><code class="kotlin" data-trim>
+                    setOf(2,3)
+                    mutableSetOf&ltInt&gt()
+                </code></pre>
+                Map
+                <pre><code class="kotlin" data-trim>
+                    mapOf("Hello" to "Hallo", "Bye" to "Tschüss")
+                    mutableMapOf&ltString,String&gt()
+                </code></pre>
+            </section>
+            <section>
+                <h3>Useful functions on collections</h3>
+                foreach{...}
+                <pre><code class="kotlin" data-trim>
+                    val numbers = listOf("one", "two", "three", "four")
+numbers.forEach {
+    println(it)
+}
+                </code></pre>
+                map{...}
+                <pre><code class="kotlin" data-trim>
+                    val numbers = setOf(1, 2, 3)
+println(numbers.map { it * 3 })
+//prints 3, 6, 9
+                </code></pre>
+                filter{...}
+                <pre><code class="kotlin" data-trim>
+                    val numbers = listOf("one", "two", "three", "four")
+val longerThan3 = numbers.filter { it.length > 3 }
+println(longerThan3)
+                </code></pre>
+            </section>
+            <section>
+                <h3>Many more useful functions</h3>
+                <a href="https://kotlinlang.org/docs/reference/collection-transformations.html">
+                    https://kotlinlang.org/docs/reference/collection-transformations.html</a>
+            </section>
         </section>
 
 
@@ -338,8 +393,50 @@ fun Example.printFunctionType() {
 Example().printFunctionType()
                 </code></pre>
         </section>
+
         </section>
 
+        <section>
+            <section>
+                <h2>Std Lib Scope functions</h2></section>
+            <section>
+                <h3>Scope functions</h3>
+                <lu>
+                    <li><b>let</b></li>
+                    <li><b>apply</b></li>
+                    <li>run</li>
+                    <li>also</li>
+                    <li>with</li>
+                    <li>takeif</li>
+                </lu>
+            </section>
+            <section>
+                <h3>Let</h3>
+                <pre><code class="kotlin" data-trim>fun &ltT, R&gt T.let(f: (T) -> R): R = f(this)
+                    </code></pre>
+                <p>Is very useful with the null-check operator ?</p>
+                <pre><code class="kotlin" data-trim>val map : Map&ltString, String&gt = ...
+val config = map[key]config?.let {
+//This block will not be exectuted if „config“ is null
+}
+                    </code></pre>
+            </section>
+            <section>
+                <h3>Apply</h3>
+                <pre><code class="kotlin" data-trim>fun &ltT&gt T.apply(f: T.() -> Unit): T { f(); return this }
+                    </code></pre>
+                <p>With ‘apply()’ we can substitute the ‘Builder’ pattern or simply make code more readable
+                </p>
+                <pre><code class="kotlin" data-trim>val recyclerView: ReyclerView = RecyclerView().apply{
+    setHasFixedSize = true
+    layoutManager = LinearLayoutManager(context)
+    adapter = MyAdapter(context)
+    clearOnScrollListener()}
+}
+                    </code></pre>
+            </section>
+
+        </section>
 
 
         <section>
@@ -399,26 +496,7 @@ class A {
 
 
 
-        <section>
-            <section>
-                <h3>Collections</h3>
-                List
-                <pre><code class="kotlin" data-trim>
-                    listOf(2,3)
-                    mutableListOf&ltInt&gt()
-                </code></pre>
-                Set
-                <pre><code class="kotlin" data-trim>
-                    setOf(2,3)
-                    mutableSetOf&ltInt&gt()
-                </code></pre>
-                Map
-                <pre><code class="kotlin" data-trim>
-                    mapOf("Hello" to "Hallo", "Bye" to "Tschüss")
-                    mutableMapOf&ltString,String&gt()
-                </code></pre>
-            </section>
-        </section>
+
     </div>
 </div>
 
